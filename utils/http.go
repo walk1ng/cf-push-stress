@@ -20,7 +20,7 @@ func doHTTPVerifyApp(app model.App) (verified bool, err error) {
 
 	if resp.StatusCode == 200 {
 		log.Printf("[%s]: Verify pass with code: %d\n", app.Name, resp.StatusCode)
-		return false, nil
+		return true, nil
 	}
 	log.Fatalf("[%s]: Verify failed with code: %d\n", app.Name, resp.StatusCode)
 	return false, nil
