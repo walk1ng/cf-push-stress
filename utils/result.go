@@ -1,8 +1,6 @@
 package utils
 
 import (
-	"log"
-
 	"github.com/walk1ng/cf-push-stress/model"
 )
 
@@ -12,7 +10,7 @@ func SummaryTest(testCount int, testResults []model.PushAppResult) {
 	allAvailablePushElapsed := make([]int, testCount)
 
 	for i, result := range testResults {
-		log.Printf("[DEBUG]:%+v\n", result)
+		logger.Printf("%+v\n", result)
 		if result.PushSucced && result.HTTPVerificationSucced {
 			pass++
 		} else {
@@ -41,6 +39,6 @@ func SummaryTest(testCount int, testResults []model.PushAppResult) {
 	successRate := (float64(pass) / float64(testCount)) * 100
 	failureRate := (float64(failed) / float64(testCount)) * 100
 
-	log.Printf("Summary\n push app %d times, pass %d times, failed %d times\n success rate: %.2f%%, failure rate: %.2f%%\n push elapsed\n  average (success): %d seconds\n  fastest: %v seconds\n  slowest: %v seconds\n",
+	logger.Printf("Summary\n push app %d times, pass %d times, failed %d times\n success rate: %.2f%%, failure rate: %.2f%%\n push elapsed\n  average (success): %d seconds\n  fastest: %v seconds\n  slowest: %v seconds\n",
 		testCount, pass, failed, successRate, failureRate, totalPushElapsed/testCount, fastest, slowest)
 }
