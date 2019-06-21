@@ -28,6 +28,17 @@ func pushApp(app model.App) (pushSucced bool, elapsed int) {
 	return true, int(ela)
 }
 
+func deleteApp(app model.App) (deleted bool, err error) {
+	log.Printf("[%s]:Deleting\n", app.Name)
+	cmd := exec.Command("cf", "delete", "-r", "-f", app.Name)
+	if err := cmd.Run(); err != nil {
+		log.Printf("[%s]:Delete failed with error:\n%s\n", app.Name, err.Error())
+		return false, err
+	}
+	log.Printf("[%s]:Delete successfully\n", app.Name)
+	return true, nil
+}
+
 // SerialPush func
 func SerialPush(count int, cfHost string) (testResults []model.PushAppResult) {
 
@@ -106,4 +117,15 @@ func finalVerify(rsts []model.PushAppResult) []model.PushAppResult {
 	}
 
 	return rsts
+}
+
+func teardown(rsts []model.PushAppResult) {
+	log.Println("Teardown...")
+	for _, rst := range rsts {
+		if rst.HTTPVerificationSucced {
+			deleteApp(rst.App)
+		} else {
+			log.Printf("[%s]:Keep for investigation\n", rst.App.Name)
+		}
+	}
 }
