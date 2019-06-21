@@ -119,7 +119,8 @@ func finalVerify(rsts []model.PushAppResult) []model.PushAppResult {
 	return rsts
 }
 
-func teardown(rsts []model.PushAppResult) {
+// Teardown func
+func Teardown(rsts []model.PushAppResult) {
 	log.Println("Teardown...")
 	for _, rst := range rsts {
 		if rst.HTTPVerificationSucced {

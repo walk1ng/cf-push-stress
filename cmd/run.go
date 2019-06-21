@@ -46,6 +46,10 @@ var runCmd = &cobra.Command{
 		}
 
 		utils.SummaryTest(pushCount, testResults)
+
+		if cleanup, _ := cmd.Flags().GetBool("cleanup"); cleanup {
+			utils.Teardown(testResults)
+		}
 	},
 }
 
@@ -67,4 +71,5 @@ func init() {
 	runCmd.PersistentFlags().Bool("concurrency", false, "concurrency push")
 	runCmd.PersistentFlags().Int("requests", 5, "number of push to perform")
 	runCmd.PersistentFlags().Int("conc", 5, "number of multiple push to make at a time ")
+	runCmd.PersistentFlags().Bool("cleanup", false, "delete app which has been verified")
 }
