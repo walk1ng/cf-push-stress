@@ -13,7 +13,7 @@ func doHTTPVerifyApp(app model.App) (verified bool, err error) {
 	resp, err := http.Get(route)
 
 	if err != nil {
-		log.Fatalf("[%s]:Send http request failed\n", app.Name)
+		log.Printf("[%s]:Send http request failed\n", app.Name)
 		return false, err
 	}
 	defer resp.Body.Close()
@@ -22,6 +22,6 @@ func doHTTPVerifyApp(app model.App) (verified bool, err error) {
 		log.Printf("[%s]: Verify pass with code: %d\n", app.Name, resp.StatusCode)
 		return true, nil
 	}
-	log.Fatalf("[%s]: Verify failed with code: %d\n", app.Name, resp.StatusCode)
+	log.Printf("[%s]: Verify failed with code: %d\n", app.Name, resp.StatusCode)
 	return false, nil
 }

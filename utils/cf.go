@@ -19,7 +19,7 @@ func pushApp(app model.App) (pushSucced bool, elapsed int) {
 	ela := end - start
 
 	if err != nil {
-		log.Fatalf("[%s]:Push failed with error:\n%s\n", app.Name, err.Error())
+		log.Printf("[%s]:Push failed with error:\n%s\n", app.Name, err.Error())
 		return false, 0
 	}
 
